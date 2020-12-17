@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Sudoku
 {
@@ -148,6 +147,7 @@ namespace Sudoku
 
         private class Sudoku
         {
+        	// Javaに合わせるならプロパティではなくフィールドにするほうがよいが、誤差なのでこのまま
             public byte[] Answer { get; }
             public short[] Rows { get; }
             public short[] Columns { get; }
@@ -163,10 +163,15 @@ namespace Sudoku
 
             public Sudoku(Sudoku other)
             {
-                this.Answer = other.Answer.ToArray();
-                this.Rows = other.Rows.ToArray();
-                this.Columns = other.Columns.ToArray();
-                this.Regions = other.Regions.ToArray();
+            	// JavaではArrays.copyOfを呼んでいる
+                this.Answer = new byte[other.Answer.Length];
+                Array.Copy(other.Answer, this.Answer, other.Answer.Length);
+                this.Rows = new short[other.Rows.Length];
+                Array.Copy(other.Rows, this.Rows, other.Rows.Length);
+                this.Columns = new short[other.Columns.Length];
+                Array.Copy(other.Columns, this.Columns, other.Columns.Length);
+                this.Regions = new short[other.Regions.Length];
+                Array.Copy(other.Regions, this.Regions, other.Regions.Length);
             }
 
             public void Update(int index, byte number)

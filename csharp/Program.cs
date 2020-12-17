@@ -30,14 +30,14 @@ namespace Sudoku
 
         private static void Read(string file, byte[][] quizzes, byte[][] solutions)
         {
-            using (var reader = new StreamReader(file))
+            using (var reader = new StreamReader(file, Encoding.ASCII, false, 8192)) // java.io.BufferedReader クラスの defaultCharBufferSize は 8192
             {
                 // 1行目をスキップ
                 reader.ReadLine();
 
                 for (int i = 0; i < quizzes.Length; i++)
                 {
-                    char[] line = reader.ReadLine().ToCharArray();
+                    string line = reader.ReadLine(); // JavaではtoCharArray()を呼んでいるが、C# では不要
                     int index = 0;
 
                     // 問題
